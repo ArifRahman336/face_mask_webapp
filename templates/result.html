@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ model_type|capitalize }} - Live Stream</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="glass-container">
+        <h1>{{ model_type|capitalize }} Mode 🎥</h1>
+        <div class="video-container">
+            <img src="{{ url_for('video_feed', model_type=model_type) }}" width="720" height="560" alt="Live Webcam Stream">
+        </div>
+        <a href="{{ url_for('select_source', source='realtime') }}" class="btn back">← Back to Real-Time Mode</a>
+        <a href="/" class="btn back">🔙 Back Home</a>
+    </div>
+</body>
+</html>

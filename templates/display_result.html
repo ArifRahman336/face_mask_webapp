@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prediction Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="glass-container">
+    <h1>🧠 Result</h1>
+    <p>{{ result }}</p>
+    <img src="{{ url_for('static', filename='uploads/' + image_file) }}" width="500px" style="margin-top: 20px;">
+    <br><br>
+    <a href="{{ url_for('select_source', source='static') }}" class="btn back">← Back to Static Options</a>
+    <a href="/" class="btn back">🔙 Back Home</a>
+  </div>
+</body>
+</html>

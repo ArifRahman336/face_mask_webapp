@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload for {{ model_type|capitalize }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    /* All styles remain unchanged */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+      color: #ccc;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .upload-box {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px dashed #888;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      transition: border 0.3s;
+    }
+
+    .upload-box:hover {
+      border-color: #1e90ff;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      color: #eee;
+      cursor: pointer;
+    }
+
+    input[type="file"]::file-selector-button {
+      background: #1e90ff;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .preview-container {
+      text-align: center;
+      display: none;
+    }
+
+    .preview-container img {
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-submit {
+      padding: 14px;
+      background: #00b894;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background: #01916b;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 25px;
+      color: #bbb;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Upload Image</h1>
+    <p>Analyze with <strong>{{ model_type|capitalize }}</strong> Model</p>
+
+    <!-- Correct logic for image upload -->
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('process_static_model', model_type=model_type) }}">
+      <div class="upload-box">
+        <input type="file" name="image" id="imageInput" accept="image/*" required>
+      </div>
+
+      <div class="preview-container" id="previewContainer">
+        <img id="previewImage" src="#" alt="Preview Image">
+      </div>
+
+      <button type="submit" class="btn-submit">🚀 Analyze</button>
+    </form>
+
+    <a href="{{ url_for('select_source', source='static') }}" class="btn back">← Back to Static Options</a>
+  </div>
+
+  <script>
+    const input = document.getElementById('imageInput');
+    const previewContainer = document.getElementById('previewContainer');
+    const previewImage = document.getElementById('previewImage');
+
+    input.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        previewContainer.style.display = 'block';
+        reader.onload = function () {
+          previewImage.src = reader.result;
+        }
+        reader.readAsDataURL(file);
+      } else {
+        previewContainer.style.display = 'none';
+        previewImage.src = '#';
+      }
+    });
+  </script>
+</body>
+</html>

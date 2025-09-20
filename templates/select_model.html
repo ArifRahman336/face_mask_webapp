@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Model</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="glass-container">
+    <h1>{{ source|capitalize }} Mode</h1>
+    <p>Select Model Type</p>
+
+    <div class="button-group">
+      <form action="/start_{{ source }}_detection">
+        <button class="btn detect">🛰️ Object Detection</button>
+      </form>
+      <form action="/start_{{ source }}_classification">
+        <button class="btn classify">🎯 Classification</button>
+      </form>
+    </div>
+    <a href="/" class="btn back">🔙 Back Home</a>
+  </div>
+</body>
+</html>
