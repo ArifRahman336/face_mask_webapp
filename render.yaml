@@ -1,10 +1,12 @@
 services:
-  - type: web
-    name: my-app
-    env: python
-    plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+  - type: web                      # Render service type
+    name: my-app                    # 👈 change to your service name
+    env: python                      # tells Render to use the Python buildpack
+    plan: free                        # or starter/standard depending on your plan
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+    startCommand: gunicorn app:app   # 👈 replace with your WSGI entry (e.g., module:app)
     envVars:
-      - key: PYTHON_VERSION
+      - key: PYTHON_VERSION          # Force Python version
         value: 3.12.6
